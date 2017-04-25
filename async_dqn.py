@@ -232,6 +232,8 @@ def get_num_actions():
 
 def train(session, graph_ops, num_actions, saver):
     # Initialize target network weights
+    session.run(tf.global_variables_initializer())
+    #
     session.run(graph_ops["reset_target_network_params"])
 
     # Set up game environments (one per thread)
@@ -241,7 +243,8 @@ def train(session, graph_ops, num_actions, saver):
     summary_op = summary_ops[-1]
 
     # Initialize variables
-    session.run(tf.initialize_all_variables())
+    # session.run(tf.initialize_all_variables())
+    #session.run(tf.global_variables_initializer())
     summary_save_path = FLAGS.summary_dir + "/" + FLAGS.experiment
     writer = tf.train.SummaryWriter(summary_save_path, session.graph)
     if not os.path.exists(FLAGS.checkpoint_dir):
@@ -295,7 +298,9 @@ def evaluation(session, graph_ops, saver):
 
 def main(_):
   g = tf.Graph()
-  with g.as_default(), tf.Session() as session:
+  session = tf.Session(graph=g)
+  with g.as_default(), session.as_default():
+  #with g.as_default(), tf.Session() as session:
     K.set_session(session)
     num_actions = get_num_actions()
     graph_ops = build_graph(num_actions)
