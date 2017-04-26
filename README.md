@@ -1,3 +1,4 @@
+# ubuntu 14.04 + tensorflow 0.12 + gym 0.8 + cuda-8.0 + python 2.7 can work!
 # Asyncronous RL in Tensorflow + Keras + OpenAI's Gym
 
 ![](http://g.recordit.co/BeiqC9l70B.gif)
